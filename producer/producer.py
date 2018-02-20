@@ -1,17 +1,19 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import pika
 
 
-connection = pika.BlockingConnection(pika.ConnectionParameters(
-	host='rabbitmq'))
+connection = pika.BlockingConnection(
+    pika.URLParameters("amqp://guest:guest@rabbit:5672"))
 channel = connection.channel()
 
 channel.queue_declare(queue='hello')
 
-while True:
-    mail = input("Enter your message: ")
-    channel.basic_publish(exchange='',
-                            routing_key='hello',
-                            body=mail)
-
-connection.close()
+try:
+    while True:
+        mail = input('[*] Enter your message: ')
+        channel.basic_publish(exchange='',
+                              routing_key='hello',
+                              body=mail)
+        print('[x] Sent!')
+except KeyboardInterrupt:
+    connection.close()

@@ -1,26 +1,32 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 import pika
-import postgresql
-import time
+import sqlite3
 
 
-time.sleep(20)
-connection = pika.BlockingConnection(pika.ConnectionParameters(
-	host='rabbitmq'))
-channel = connection.channel()
-
-db = postgresql.open('pq://docker:docker@database:5430/docker')
-db.execute("DROP TABLE IF EXISTS Mails;")
-db.execute("CREATE TABLE Mails (id INT PRIMARY KEY, mail VARCHAR(256));")
-ins = db.prepare("INSERT INTO Mails (mail) VALUES ($1)")
-
+queue_connection = pika.BlockingConnection(
+    pika.URLParameters("amqp://guest:guest@rabbit:5672"))
+channel = queue_connection.channel()
 channel.queue_declare(queue='hello')
 
 def callback(ch, method, properties, body):
-    ins(str(body))
+    cursor.execute('INSERT INTO Mails (message) VALUES (?)', (body,))
+    db_connection.commit()
+
+db_connection = sqlite3.connect('messages.db')
+cursor = db_connection.cursor()
+cursor.execute('CREATE TABLE IF NOT EXISTS Mails (message VARCHAR(256))')
 
 channel.basic_consume(callback,
                       queue='hello',
                       no_ack=True)
 
-channel.start_consuming()
+try:
+    channel.start_consuming()
+except KeyboardInterrupt:
+    cursor.execute('SELECT * FROM Mails LIMIT 5')
+    print(cursor.fetchall())
+    channel.stop_consuming()
+
+db_connection.close()
+channel.close()
+
