@@ -1,24 +1,32 @@
-queue:
-  image: rabbitmq:3
-  restart: always
-  hostname: queue
-  ports:
-    - "5672:5672"
-
-consumer:
-  build: ./Consumer
-  restart: always
-  links:
-    - queue
-    - database
-
-database:
-  restart: always
-  image: sameersbn/postgresql:9.4-17
-  hostname: database
-  environment:
-  - DEBUG=false
-
-  - DB_USER=login
-  - DB_PASS=pass
-  - DB_NAME=db_hello
+version: '3.3'
+services:
+  rabbitmq:
+    image: rabbitmq
+    networks:
+      - backend
+    ports:
+      - "5676:5676"
+  database:
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    depends_on:
+      - rabbitmq
+    networks:
+      - backend
+    ports:
+      - "5430:5430"
+  consumer:
+    build:
+      context: ./consumer
+      dockerfile: Dockerfile
+    depends_on:
+      - rabbitmq
+      - database
+    links:
+      - rabbitmq
+      - database
+    networks:
+      - backend
+networks:
+  backend:
