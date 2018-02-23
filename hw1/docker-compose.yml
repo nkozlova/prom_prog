@@ -1,0 +1,20 @@
+version: "3.3"
+services:
+  rabbit:
+    image: rabbitmq
+    hostname: rabbit
+    ports:
+      - "5676:5676"
+
+  consumer:
+    build: ./consumer
+    hostname: consumer
+    command: tail -F /dev/null
+    links:
+      - rabbit
+  producer:
+    build: ./producer
+    hostname: producer
+    command: tail -F /dev/null
+    links:
+      - rabbit
