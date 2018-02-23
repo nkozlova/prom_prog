@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+<div class="content">
+    {% block content %}
+        <nav>
+            <a href="{% url "to_do_list:to_do_list_list" %}">Вернуться к списку</a>
+            <p></p>
+
+            {% if not object.mark_as_done %}
+                <a class="task-edit-link" href="{% url "to_do_list:edit_task" pk=object.id %}">Редактировать задачу</a>
+                <p></p>
+            {% endif %}
+        </nav>
+
+        <section>
+
+            <article><strong>{{ object.title }}</strong></article>
+
+            <p>{{ object.description }}</p>
+            <p></p>
+            <p></p>
+
+            <p>Создана: {{ object.created }}</p>
+            <p>Обновлена: {{ object.updated }}</p>
+            <p></p>
+
+            {% if object.mark_as_done %}
+                <article>Задача сделана</article>
+                <input type="submit" value="Reopen" class="Donebutton button" data-url="{% url "to_do_list:task_done" pk=object.id %}">
+            {% else %}
+                <input type="submit" value="Done" class="Donebutton button" data-url="{% url "to_do_list:task_done" pk=object.id %}">
+            {% endif %}
+
+        </section>
+{% endblock %}
+</div>

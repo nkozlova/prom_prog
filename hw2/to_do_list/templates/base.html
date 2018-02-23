@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+    <head>
+        <title>To do list</title>
+        <link rel="stylesheet" href="{% static "base.css" %}">
+        <script src="{% static "base.js" %}"></script>
+        {% block extra %}{% endblock %}
+    </head>
+
+    <body>
+        <div class="content">{% block content %}{% endblock %}</div>
+
+        <footer>{% block footer %}<i>Список задач</i>{% endblock %}</footer>
+    </body>
+</html>

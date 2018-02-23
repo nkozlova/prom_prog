@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+<div class="content">
+{% block content %}
+
+    <section>
+        <article>Создание новой задачи</article>
+        <h2><a href="{% url "to_do_list:to_do_list_list" %}">Список задач</a></h2>
+
+        <form action="{% url "to_do_list:add_task" %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" class="button" value="Создать">
+        </form>
+    </section>
+{% endblock %}
+</div>

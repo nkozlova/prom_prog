@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+<div class="content">
+    {% block content %}
+        <section>
+            <p><strong><a href="{% url "to_do_list:add_task" %}">Создать новую задачу</a></strong></p>
+
+            {% if object_list %}
+                <article><h2>Список задач:</h2></article>
+                {% for task in object_list %}
+                    <div>
+                        <a href="{% url "to_do_list:task" pk=task.id %}">{{ task.title }}</a>
+                        <p></p>
+                        <details>Описание: {{ task.description }}</details>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <header><strong>Задач пока нет</strong></header>
+            {% endif %}
+
+        </section>
+
+    {% endblock %}
+</div>
