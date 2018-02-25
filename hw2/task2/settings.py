@@ -77,20 +77,12 @@ WSGI_APPLICATION = 'task2.wsgi.application'
 
 DATABASES = {
     'default': {
-        #'ENGINE': 'django.db.backends.mysql',
-        #'NAME': 'Task2',
-        #'USER': 'nady',
-        #'PASSWORD': 'kg03467yflz',
-        #'HOST': '5430',
-        #'ENGINE': 'django.db.backends.sqlite3',
-        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'postgres',#''task2',
         'USER': 'postgres',#'nady',
         #'PASSWORD': 'nady',
-        'HOST': 'db',
-        'PORT': 5432,
+        'HOST': 'db',#'localhost',
+        'PORT': 5432,#'',
     }
 }
 
