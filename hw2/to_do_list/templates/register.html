@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if user.is_anonymous %}
+        <header>
+            <a class="header" href="{% url "to_do_list:login" %}">Уже есть аккаунт</a>
+        </header>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <section>
+        <article>Регистрация нового пользователя<p></p></article>
+
+        {% if user.is_anonymous %}
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" class="button">Зарегестрироваться</input>
+            </form>
+        {% else %}
+            {{ user.username }}
+            <a href="{% url "to_do_list:logout" %}">Выход</a>
+        {% endif %}
+    </section>
+
+{% endblock %}

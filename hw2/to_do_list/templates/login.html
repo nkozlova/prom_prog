@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <header>
+        {% if user.is_anonymous %}
+            <a class="header" href="{% url "to_do_list:register" %}">Регистрация</a>
+        {% endif %}
+    </header>
+
+{% endblock %}
+
+{% block content %}
+    <section>
+        <article>Войти в систему<p></p></article>
+
+        {% if user.is_anonymous %}
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.errors }}
+                {{ form }}
+                <input type="submit" class="button">
+            </form>
+        {% else %}
+            {{ user.username }}
+            <a href="{% url "to_do_list:logout" %}">Выход</a>
+        {% endif %}
+    </section>
+
+{% endblock %}

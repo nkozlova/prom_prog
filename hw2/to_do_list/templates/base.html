@@ -9,6 +9,18 @@
     </head>
 
     <body>
+        {% block title %}
+            <header>
+                {% if user.is_anonymous %}
+                    <strong><a class="header" href="{% url "to_do_list:login" %}">Вход</a>
+                    <a class="header" href="{% url "to_do_list:register" %}">Регистрация</a></strong>
+                {% else %}
+                    <strong class="user">{{ user.username }}
+                    <a class="header" href="{% url "to_do_list:logout" %}">Выход</a></strong>
+                {% endif %}
+            </header>
+        {% endblock %}
+
         <div class="content">{% block content %}{% endblock %}</div>
 
         <footer>{% block footer %}<i>Список задач</i>{% endblock %}</footer>
