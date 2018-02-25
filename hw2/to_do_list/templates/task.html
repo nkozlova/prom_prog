@@ -20,16 +20,18 @@
             <p></p>
             <p></p>
 
+            {% if object.mark_as_done %}
+                <article>Задача сделана</article>
+            {% else %}
+                <article>Задача еще не сделана</article>
+            {% endif %}
+            <a class="task-done-link" href="{% url "to_do_list:task_done" pk=object.id %}">Изменить статус задачи</a>
+            <p></p>
+
             <p>Создана: {{ object.created }}</p>
             <p>Обновлена: {{ object.updated }}</p>
             <p></p>
 
-            {% if object.mark_as_done %}
-                <article>Задача сделана</article>
-                <input type="submit" value="Reopen" class="Donebutton button" data-url="{% url "to_do_list:task_done" pk=object.id %}">
-            {% else %}
-                <input type="submit" value="Done" class="Donebutton button" data-url="{% url "to_do_list:task_done" pk=object.id %}">
-            {% endif %}
 
         </section>
 {% endblock %}

@@ -1,7 +1,5 @@
 FROM python:3
 
-ENV PYTHONUUBUFFERED 1
-
 RUN mkdir /code
 WORKDIR /code
 

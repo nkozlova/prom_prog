@@ -56,6 +56,13 @@ class UpdateTask(UpdateView):
         return super(UpdateTask, self).dispatch(request, *args, **kwargs)
 
 
-def done_task(request, pk=None):
-    task = get_object_or_404(Task, id=pk)
-    return redirect("to_do_list:task", args=(pk,))
+class TaskDone(UpdateView):
+    template_name = 'task_done.html'
+    model = Task
+    fields = ('mark_as_done',)
+
+    def get_success_url(self):
+        return reverse("to_do_list:task", args=(self.object.pk,))
+
+    def dispatch(self, request, *args, **kwargs):
+        return super(TaskDone, self).dispatch(request, *args, **kwargs)

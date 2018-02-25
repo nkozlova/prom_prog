@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+<div class="content">
+    {% block content %}
+        <section>
+            <article>Изменить статус задачи</article>
+
+            <h2><a href="{% url "to_do_list:to_do_list_list" %}">Список задач</a></h2>
+            <h2><a href="{% url "to_do_list:task" pk=object.id %}">К задаче</a></h2>
+
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" class="button" value="Сохранить">
+            </form>
+        </section>
+    {% endblock %}
+</div>
