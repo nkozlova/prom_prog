@@ -50,10 +50,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-LOGIN_URL = 'to_do_list:login'
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
-
 ROOT_URLCONF = 'task2.urls'
 
 TEMPLATES = [
@@ -81,11 +77,19 @@ WSGI_APPLICATION = 'task2.wsgi.application'
 
 DATABASES = {
     'default': {
+        #'ENGINE': 'django.db.backends.mysql',
+        #'NAME': 'Task2',
+        #'USER': 'nady',
+        #'PASSWORD': 'kg03467yflz',
+        #'HOST': '5430',
+        #'ENGINE': 'django.db.backends.sqlite3',
+        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'db',#'localhost',#
+        'NAME': 'postgres',#''task2',
+        'USER': 'postgres',#'nady',
+        #'PASSWORD': 'nady',
+        'HOST': 'db',
         'PORT': 5432,
     }
 }
@@ -128,5 +132,3 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
-
-AUTH_USER_MODEL = 'to_do_list.User'

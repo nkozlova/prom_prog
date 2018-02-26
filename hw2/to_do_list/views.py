@@ -1,35 +1,9 @@
 from django.shortcuts import render
 from django.urls import reverse
-from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, View
-from .models import Task, User
+from .models import Task
 # Create your views here.
-
-
-class CreateUser(UserCreationForm):
-
-    class Meta:
-        model = User
-        fields = ('username', 'password1', 'password2')
-
-    success_url = '/login/'
-    template_name = 'register.html'
-
-    def form_valid(self, form):
-        form.save(commit=True)
-        return super(CreateUser, self).form_valid(form)
-
-
-def register(request):
-    if request.method == 'GET':
-        form = CreateUser()
-    else:
-        form = CreateUser(request.POST)
-    if form.is_valid():
-        form.save(commit=True)
-        return redirect('/login/')
-    return render(request, 'register.html', {'form': form})
 
 
 class ToDoListView(ListView):
@@ -64,7 +38,6 @@ class CreateTask(CreateView):
 
     def form_valid(self, form):
         form.instance.mark_as_done = False
-        form.instance.author = self.request.user
         return super(CreateTask, self).form_valid(form)
 
     def get_success_url(self):
@@ -81,9 +54,6 @@ class UpdateTask(UpdateView):
 
     def dispatch(self, request, *args, **kwargs):
         return super(UpdateTask, self).dispatch(request, *args, **kwargs)
-
-    def get_queryset(self):
-        return super(UpdateTask, self).get_queryset().filter(author=self.request.user)
 
 
 class TaskDone(UpdateView):
