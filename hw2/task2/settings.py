@@ -53,8 +53,6 @@ MIDDLEWARE = [
 LOGIN_URL = 'to_do_list:login'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/'
-AUTH_USER_MODEL = 'profile.User'
-
 
 ROOT_URLCONF = 'task2.urls'
 
@@ -84,11 +82,11 @@ WSGI_APPLICATION = 'task2.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',#'task2',#
-        'USER': 'postgres',#'nady',#
-        #'PASSWORD': 'nady',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
         'HOST': 'db',#'localhost',#
-        'PORT': 5432,#'',#
+        'PORT': 5432,
     }
 }
 

@@ -23,7 +23,7 @@ class Task(ModelWithDates):
     title = models.CharField(max_length=255, default='')
     description = models.TextField()
     mark_as_done = models.BooleanField(default=False)
-    author = models.ForeignKey(User)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL)
 
     def __unicode__(self):
         return self.title
