@@ -1,0 +1,5 @@
+Для запуска внутри докера нужны команды 
+./manage.py makemigrations
+./manage.py migrate
+./manage.py createsuperuser
+./manage.py runserver
